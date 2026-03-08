@@ -260,7 +260,7 @@ function CartoonMap({ season, aqi, hotspots, activeId, deployedIds, onTap }) {
   }
 
   return (
-    <svg viewBox="0 0 800 580" style={{ position:"absolute", top:55, bottom:50, left:0, right:0, zIndex:4 }}
+    <svg viewBox="0 0 800 580" style={{ width:"100%", height:"100%", display:"block" }}
       preserveAspectRatio="xMidYMid meet">
       <defs>
         <filter id="outline">
@@ -818,9 +818,11 @@ export default function App() {
       `}</style>
 
       {/* MAP */}
-      <CartoonMap season={season} aqi={aqi} hotspots={HOTSPOTS}
-        activeId={activeHS?.id} deployedIds={deployed}
-        onTap={h => setActiveHS(activeHS?.id===h.id ? null : h)}/>
+      <div style={{ position:"absolute", top:55, bottom:50, left:0, right:0, zIndex:4 }}>
+        <CartoonMap season={season} aqi={aqi} hotspots={HOTSPOTS}
+          activeId={activeHS?.id} deployedIds={deployed}
+          onTap={h => setActiveHS(activeHS?.id===h.id ? null : h)}/>
+      </div>
 
       {/* TOP HUD */}
       <div style={{ position:"absolute", top:0, left:0, right:0, zIndex:20,

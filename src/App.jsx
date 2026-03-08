@@ -812,6 +812,8 @@ export default function App() {
     setAqi(SEASONS[0].baseAqi);
     setScreen("game");
     setShowSeason(true);
+    audio.startBg();
+    setBgOn(true);
   }
 
   function toggleBg() {

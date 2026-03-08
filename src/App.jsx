@@ -701,36 +701,36 @@ function IntroScreen({ onStart }) {
   return (
     <div style={{ minHeight:"100vh", background:"linear-gradient(160deg,#2c1204 0%,#3d1a08 50%,#1a0804 100%)",
       display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center",
-      padding:24, fontFamily:"'Baloo 2',cursive" }}>
+      padding:"16px 24px", fontFamily:"'Baloo 2',cursive", overflowY:"auto" }}>
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap');`}</style>
       <div style={{ maxWidth:440, width:"100%", textAlign:"center" }}>
-        <div style={{ fontSize:80, filter:"drop-shadow(0 0 30px rgba(255,120,0,0.5))" }}>🏙️</div>
+        <div style={{ fontSize:"clamp(48px,8vw,72px)", filter:"drop-shadow(0 0 30px rgba(255,120,0,0.5))" }}>🏙️</div>
         <div style={{ fontFamily:"sans-serif", fontSize:12, color:"#e05020", fontWeight:700,
-          letterSpacing:3, textTransform:"uppercase", marginBottom:6 }}>Delhi, India</div>
-        <h1 style={{ fontSize:"clamp(38px,9vw,58px)", color:"#fff8e0", margin:"0 0 10px",
+          letterSpacing:3, textTransform:"uppercase", marginBottom:4 }}>Delhi, India</div>
+        <h1 style={{ fontSize:"clamp(32px,8vw,52px)", color:"#fff8e0", margin:"0 0 8px",
           lineHeight:1.05, textShadow:"0 2px 20px rgba(224,80,32,0.5)" }}>AQI Hero</h1>
-        <p style={{ fontSize:16, color:"#c8a070", fontFamily:"sans-serif", margin:"0 0 28px", lineHeight:1.7 }}>
+        <p style={{ fontSize:"clamp(13px,2vw,16px)", color:"#c8a070", fontFamily:"sans-serif", margin:"0 0 16px", lineHeight:1.6 }}>
           Delhi's winter AQI hits <strong style={{color:"#ff6644"}}>400+</strong> — 16× the safe limit.<br/>
           <strong style={{color:"#ffb07a"}}>You have one year to fix it.</strong>
         </p>
-        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10, marginBottom:24, textAlign:"left" }}>
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, marginBottom:16, textAlign:"left" }}>
           {[["🗺️","Tap the map","Click illustrated hotspots across Delhi"],
             ["📊","Real data","Every action uses actual Delhi AQI research"],
             ["🌾","5 seasons","Spring → Summer → Monsoon → Harvest → Diwali"],
             ["🎯","Target: AQI 100","Below 100 = children can play outside safely"]
           ].map(([e,t,d],i)=>(
             <div key={i} style={{ background:"rgba(255,255,255,0.05)", borderRadius:14,
-              padding:"13px 14px", border:"1.5px solid rgba(255,200,100,0.15)" }}>
-              <div style={{ fontSize:24, marginBottom:5 }}>{e}</div>
-              <div style={{ fontSize:13, fontWeight:700, color:"#fff8e0", marginBottom:2 }}>{t}</div>
-              <div style={{ fontSize:11, color:"#9a7050", fontFamily:"sans-serif", lineHeight:1.4 }}>{d}</div>
+              padding:"10px 12px", border:"1.5px solid rgba(255,200,100,0.15)" }}>
+              <div style={{ fontSize:22, marginBottom:4 }}>{e}</div>
+              <div style={{ fontSize:12, fontWeight:700, color:"#fff8e0", marginBottom:2 }}>{t}</div>
+              <div style={{ fontSize:10, color:"#9a7050", fontFamily:"sans-serif", lineHeight:1.4 }}>{d}</div>
             </div>
           ))}
         </div>
         <button onClick={onStart} style={{ background:"linear-gradient(135deg,#e05020,#c03010)",
-          color:"#fff", border:"none", borderRadius:16, padding:"16px", fontSize:22,
+          color:"#fff", border:"none", borderRadius:16, padding:"14px", fontSize:"clamp(17px,3vw,22px)",
           fontFamily:"'Baloo 2',cursive", fontWeight:700, cursor:"pointer",
-          boxShadow:"0 5px 0 #801808, 0 8px 30px rgba(224,80,32,0.4)", width:"100%", marginBottom:10 }}>
+          boxShadow:"0 5px 0 #801808, 0 8px 30px rgba(224,80,32,0.4)", width:"100%", marginBottom:8 }}>
           Start Cleaning Delhi! 🚀
         </button>
         <div style={{ fontFamily:"sans-serif", fontSize:12, color:"#6a4030" }}>Ages 9–12 · 5 seasons · ~10 min</div>

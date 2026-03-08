@@ -260,7 +260,7 @@ function CartoonMap({ season, aqi, hotspots, activeId, deployedIds, onTap }) {
   }
 
   return (
-    <svg viewBox="0 0 800 580" style={{ width:"100%", height:"100%", display:"block" }}
+    <svg viewBox="0 0 800 580" style={{ position:"absolute", inset:0, width:"100%", height:"100%" }}
       preserveAspectRatio="xMidYMid meet">
       <defs>
         <filter id="outline">
@@ -755,8 +755,58 @@ export default function App() {
   const [showSeason, setShowSeason] = useState(false);
   const [deployed, setDeployed] = useState([]);
   const [bgOn, setBgOn] = useState(false);
+  const [mapScale, setMapScale] = useState(1);
+  const [mapPan, setMapPan] = useState({ x:0, y:0 });
+  const mapTouchRef = useRef({});
   const audio = useAudio();
   const season = SEASONS[ri];
+
+  function onMapTouchStart(e) {
+    if (e.touches.length === 2) {
+      mapTouchRef.current = {
+        type:"pinch",
+        startDist: Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        ),
+        startScale: mapScale
+      };
+    } else if (e.touches.length === 1 && mapScale > 1) {
+      mapTouchRef.current = {
+        type:"pan",
+        startX: e.touches[0].clientX - mapPan.x,
+        startY: e.touches[0].clientY - mapPan.y
+      };
+    }
+  }
+
+  function onMapTouchMove(e) {
+    if (mapTouchRef.current.type === "pinch" && e.touches.length === 2) {
+      e.preventDefault();
+      const dist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      const s = Math.max(1, Math.min(4, mapTouchRef.current.startScale * (dist / mapTouchRef.current.startDist)));
+      setMapScale(s);
+      if (s <= 1) setMapPan({ x:0, y:0 });
+    } else if (mapTouchRef.current.type === "pan" && e.touches.length === 1) {
+      e.preventDefault();
+      setMapPan({
+        x: e.touches[0].clientX - mapTouchRef.current.startX,
+        y: e.touches[0].clientY - mapTouchRef.current.startY
+      });
+    }
+  }
+
+  function onMapTouchEnd(e) {
+    if (e.touches.length === 0) {
+      mapTouchRef.current = {};
+      if (mapScale <= 1) setMapPan({ x:0, y:0 });
+    } else if (e.touches.length < 2 && mapTouchRef.current.type === "pinch") {
+      mapTouchRef.current = {};
+    }
+  }
 
   function startGame() {
     setAqi(SEASONS[0].baseAqi);
@@ -818,11 +868,25 @@ export default function App() {
       `}</style>
 
       {/* MAP */}
-      <div style={{ position:"absolute", top:55, bottom:50, left:0, right:0, zIndex:4 }}>
+      <div style={{ position:"absolute", top:55, bottom:50, left:0, right:0, zIndex:4,
+        transform:`translate(${mapPan.x}px,${mapPan.y}px) scale(${mapScale})`,
+        transformOrigin:"center center", touchAction:"none" }}
+        onTouchStart={onMapTouchStart}
+        onTouchMove={onMapTouchMove}
+        onTouchEnd={onMapTouchEnd}>
         <CartoonMap season={season} aqi={aqi} hotspots={HOTSPOTS}
           activeId={activeHS?.id} deployedIds={deployed}
           onTap={h => setActiveHS(activeHS?.id===h.id ? null : h)}/>
       </div>
+      {mapScale > 1 && (
+        <button onClick={() => { setMapScale(1); setMapPan({ x:0, y:0 }); }}
+          style={{ position:"absolute", top:60, right:10, zIndex:25,
+            background:"rgba(20,10,2,0.85)", border:"1.5px solid rgba(200,160,40,0.5)",
+            borderRadius:20, padding:"4px 10px", color:"#fff8e0", fontSize:12,
+            fontFamily:"'Baloo 2',cursive", fontWeight:700, cursor:"pointer" }}>
+          ✕ Reset zoom
+        </button>
+      )}
 
       {/* TOP HUD */}
       <div style={{ position:"absolute", top:0, left:0, right:0, zIndex:20,

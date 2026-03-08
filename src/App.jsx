@@ -261,7 +261,7 @@ function CartoonMap({ season, aqi, hotspots, activeId, deployedIds, onTap }) {
 
   return (
     <svg viewBox="0 0 800 580" style={{ position:"absolute", inset:0, width:"100%", height:"100%", zIndex:4 }}
-      preserveAspectRatio="xMidYMid slice">
+      preserveAspectRatio="xMidYMid meet">
       <defs>
         <filter id="outline">
           <feMorphology operator="dilate" radius="2" in="SourceAlpha" result="expanded"/>
@@ -652,7 +652,7 @@ function ResultScreen({ aqi, history, onRestart }) {
   return (
     <div style={{ minHeight:"100vh", background:"linear-gradient(160deg,#0a1a08 0%,#1a3018 50%,#081408 100%)",
       display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center",
-      padding:24, fontFamily:"'Baloo 2',cursive" }}>
+      padding:24, fontFamily:"'Baloo 2',cursive", overflowY:"auto" }}>
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap');`}</style>
       <div style={{ maxWidth:480, width:"100%", textAlign:"center" }}>
         <div style={{ fontSize:72, marginBottom:8 }}>{aqi<150?"🌟":aqi<250?"😊":"😷"}</div>
@@ -808,7 +808,7 @@ export default function App() {
 
   const aqiPct = Math.min(1, aqi / 420);
   return (
-    <div style={{ position:"fixed", inset:0, fontFamily:"'Baloo 2',cursive", overflow:"hidden" }}>
+    <div style={{ position:"fixed", inset:0, fontFamily:"'Baloo 2',cursive", overflow:"hidden", background: season.skyA }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap');
         *{box-sizing:border-box;}

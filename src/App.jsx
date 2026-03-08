@@ -260,7 +260,7 @@ function CartoonMap({ season, aqi, hotspots, activeId, deployedIds, onTap }) {
   }
 
   return (
-    <svg viewBox="0 0 800 580" style={{ position:"absolute", inset:0, width:"100%", height:"100%", zIndex:4 }}
+    <svg viewBox="0 0 800 580" style={{ position:"absolute", top:55, bottom:50, left:0, right:0, zIndex:4 }}
       preserveAspectRatio="xMidYMid meet">
       <defs>
         <filter id="outline">
